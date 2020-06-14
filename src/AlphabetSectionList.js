@@ -22,7 +22,8 @@ export default class AlphabetSectionList extends Component {
 
     this.state = {
       dataSource: [],
-      offsetY: 0
+      offsetY: 0,
+      selectedLetter:''
     };
 
     this.renderFooter = this.renderFooter.bind(this);
@@ -82,7 +83,6 @@ export default class AlphabetSectionList extends Component {
         offsetY
       });
     }
-
     this.props.onScroll && this.props.onScroll(e);
   }
 
@@ -92,6 +92,7 @@ export default class AlphabetSectionList extends Component {
         offsetY: e.nativeEvent.contentOffset.y
       });
     }
+
   }
 
   render() {
@@ -113,6 +114,7 @@ export default class AlphabetSectionList extends Component {
         getSectionListTitle={this.props.getRightSectionListTitle}
         component={this.props.rightSectionListItem}
         fontStyle={this.props.sectionListFontStyle}
+        selectedLetter={this.state.selectedLetter}
       /> :
       null;
 
@@ -151,7 +153,12 @@ export default class AlphabetSectionList extends Component {
     return (
       <View ref="view" style={[styles.container, this.props.style]}>
         <SectionList
+          showsVerticalScrollIndicator={false}
           ref="listview"
+          onViewableItemsChanged={(viewableItems)=>{
+            let letterTitle = viewableItems['changed'][0]['section']['title'];
+            this.setState({selectedLetter:letterTitle});
+          }}
           keyExtractor={(item, index) => item + index}
           {...props}
         />
