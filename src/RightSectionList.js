@@ -82,8 +82,9 @@ export default class RightSectionList extends Component {
       const title = this.props.getSectionListTitle ?
         this.props.getSectionListTitle(section) :
         section;
-
-      const textStyle = this.props.data[section].length ?
+      this.lastSelectedIndex == null ? this.lastSelectedIndex = 0 : null;
+      const isSelected = (index == this.lastSelectedIndex && !this.props.selectedLetter) || (section == this.props.selectedLetter);
+      const textStyle = this.props.data[section].length && isSelected?
         styles.text :
         styles.inactivetext;
 
@@ -122,25 +123,27 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     backgroundColor: 'transparent',
-    alignItems:'flex-end',
+    alignItems:'flex-start',
     justifyContent:'center',
-    right: 5,
-    top: 0,
-    bottom: 0
+    right: 10,
+    top: 40,
+    bottom: 15,
   },
 
   item: {
-    padding: 0
+    marginTop: 10
   },
 
   text: {
-    fontWeight: '700',
-    color: '#008fff'
+    color: '#777777',
+    fontFamily:'Roboto-Medium',
+    fontSize:16
   },
 
   inactivetext: {
-    fontWeight: '700',
-    color: '#CCCCCC'
+    color: '#cccccc',
+    fontFamily:'Roboto-Medium',
+    fontSize:16
   }
 });
 
